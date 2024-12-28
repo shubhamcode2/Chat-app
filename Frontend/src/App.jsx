@@ -11,38 +11,55 @@ import { GET_USER_INFO } from './utils/constants'
 
 const PrivateRoutes = ({ children }) => {
   const { userInfo } = userAppStore()
-  const isAuthentiacted = !!userInfo
-  return isAuthentiacted ? children : <Navigate to="/auth" />
+  const isAuthenticated = !!userInfo
+  return isAuthenticated ? children : <Navigate to="/auth" />
 }
 
 const AuthRoute = ({ children }) => {
   const { userInfo } = userAppStore()
-  const isAuthentiacted = !!userInfo
-  return isAuthentiacted ? <Navigate to="/auth" /> : children
+  const isAuthenticated = !!userInfo // if userInfo is present then isAuthenticated will be true and !! is used to convert the value to boolean basically its for truthy or falsy values
+  return isAuthenticated ? <Navigate to="/chat" /> : children
 }
+
+
 const App = () => {
   const { userInfo, setUserInfo } = userAppStore()
   const [loading, setLoading] = React.useState(true)
 
   useEffect(() => {
+
     const getUserData = async () => {
+
       try {
-        const response = await apiClient.get(GET_USER_INFO,{
+        const response = await apiClient.get(GET_USER_INFO, {
           withCredentials: true,
         });
-        console.log({response});
-        
-      } catch (error) {
-        console.log({error})
-        
+        if (response.status === 200 && response.data.id) {
+          setUserInfo(response.data)
+        }
+        else {
+          setUserInfo(undefined)
+        }
+        console.log({ response });
       }
-     }
+      catch (error) {
+        setUserInfo(undefined)
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (!userInfo) {
       getUserData()
     } else {
       setLoading(false)
     }
+
   }, [userInfo, setUserInfo])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <BrowserRouter>

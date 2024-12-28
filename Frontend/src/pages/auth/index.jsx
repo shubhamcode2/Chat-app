@@ -51,11 +51,12 @@ const Auth = () => {
 
     const handleSignUp = async () => {
         if (validaateSignUp()) {
-
             //here we will make the api call to signup the user apiclient is the axios instance SIGNUP_ROUTE is the route to signup the user and we are sending the email and password in the body of the request
+
             const response = await apiClient.post(SIGNUP_ROUTE, { email, password },
                 { withCredentials: true }
             );
+            
             if (response.status === 201) {
                 setUserInfo(response.data.user)
                 navigate('/profile')
