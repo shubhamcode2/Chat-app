@@ -73,8 +73,10 @@ const Auth = () => {
             if (response.data.user.id) {
                 setUserInfo(response.data.user)
                 if (response.data.user.profileSetup) {
+                    toast.success("Login successful.");
                     navigate('/chat')
                 } else {
+                    toast.success("Login successful.");
                     navigate('/profile')
                 }
             }

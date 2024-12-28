@@ -24,7 +24,7 @@ const userSchema = new Schema({
         required: false,
     },
     color: {
-        type: Number,
+        type: String,
         required: false,
     },
     profileSetup: {
