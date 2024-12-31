@@ -110,7 +110,7 @@ export const getUserInfo = async (request, response, next) => {
 export const updateProfile = async (request, response, next) => {
     try {
         const { userId } = request
-        const { firstName, lastName, color } = request.body;
+        const { firstName, lastName, color, } = request.body;
         if (!firstName || !lastName || !color) {
             return response.status(400).send("All fields are required");
         }
@@ -142,7 +142,7 @@ export const addProfileImage = async (request, response, next) => {
             return response.status(400).send("Image is required");
         }
         const date = Date.now();
-        let fileName = "uploads/profiles" + date + request.file.originalname;
+        let fileName = "uploads/profiles/" + date + request.file.originalname;
         renameSync(request.file.path, fileName);
 
         const updatedUser = await User.findByIdAndUpdate(request.userId, { image: fileName }, { new: true, runValidators: true });

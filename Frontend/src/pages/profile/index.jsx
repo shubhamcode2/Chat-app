@@ -1,3 +1,4 @@
+// import OnlyIMG from '../../assets/OnlyIMG.png'
 import { userAppStore } from '@/store'
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -28,9 +29,9 @@ const Profile = () => {
       setLastName(userInfo.lastName)
       setSelectedColor(userInfo.color)
     }
-if(userInfo.image){
-  setImage(`${HOST}/${userInfo.image}`)
-}
+    if (userInfo.image) {
+      setImage(`${HOST}/${userInfo.image}`)
+    }
 
   }, [userInfo])
 
@@ -50,7 +51,7 @@ if(userInfo.image){
           {
             firstName,
             lastName,
-            // color: colors[selectedColor]
+            color: colors[selectedColor],
           }, { withCredentials: true });
         if (response.status === 200 && response.data) {
           setUserInfo({ ...response.data })
@@ -67,14 +68,20 @@ if(userInfo.image){
 
   const handleFileInputClick = () => {
     fileInputRef.current.click();
+    console.log(fileInputRef.current);
+
   };
 
   const handleImgChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
+      console.log(file);
+
       const formData = new FormData();
       formData.append("profile-image", file)
       const response = await apiClient.post(ADD_PROFILE_IMAGE_ROUTE, formData, { withCredentials: true })
+
+      console.log(response);
 
       if (response.status === 200 && response.data.image) {
         setUserInfo({ ...userInfo, image: response.data.image })
@@ -87,16 +94,18 @@ if(userInfo.image){
   const handleDeleteImage = async () => {
     try {
       const response = await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE, { withCredentials: true })
-      if(response.status === 200){
+      if (response.status === 200) {
         setUserInfo({ ...userInfo, image: null })
         toast.success("Image removed successfully.");
         setImage(null);
       }
     } catch (error) {
-      
-    } 
+
+    }
 
   }
+  // console.log("image ", image);
+
 
 
 
