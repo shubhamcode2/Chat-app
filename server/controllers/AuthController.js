@@ -186,8 +186,6 @@ export const removeProfileImage = async (request, response, next) => {
 }
 
 export const logout = async (request, response, next) => {
-    console.log("kya re laudeya");
-
     response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "none", httpOnly: true });
     return response.status(200).send("User logged out successfully");
 }

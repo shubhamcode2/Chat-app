@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { getColor } from '@/lib/utils'
 import { userAppStore } from '@/store'
-import { HOST } from '@/utils/constants'
+import { HOST, LOGOUT_ROUTE } from '@/utils/constants'
 import {
     Tooltip,
     TooltipContent,
@@ -12,11 +12,25 @@ import { IoLogOut } from "react-icons/io5"
 import React from 'react'
 import { FiEdit } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
+import apiClient from '@/lib/api-client'
+import { toast } from 'sonner'
 
 const ProfileInfo = () => {
-    const { userInfo, firstName, lastName } = userAppStore()
+    const { userInfo, setUserInfo } = userAppStore()
     const navigate = useNavigate()
-    const logOut = async () => { }
+
+    const logOut = async () => {
+        try {
+            const response = await apiClient.post(LOGOUT_ROUTE, {}, { withCredentials: true })
+            if (response.status === 200) {
+                toast.success("Logout successful.");
+                setUserInfo(null)
+                navigate("/auth");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <div
             className='absolute bottom-0 left-0 w-full flex items-center justify-evenly px-10 h-16 bg-[rgb(27,27,30)] border-t-2 border-[rgb(51,51,51)] '
@@ -51,7 +65,7 @@ const ProfileInfo = () => {
             <div className='flex gap-5'>
                 <TooltipProvider>
                     <Tooltip>
-                        <TooltipTrigger><FiEdit onClick={() => navigate('/profile')}   /></TooltipTrigger>
+                        <TooltipTrigger><FiEdit onClick={() => navigate('/profile')} /></TooltipTrigger>
                         <TooltipContent>
                             <p>Edit Profile</p>
                         </TooltipContent>

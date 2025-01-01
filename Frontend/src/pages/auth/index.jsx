@@ -53,38 +53,49 @@ const Auth = () => {
 
 
     const handleSignUp = async () => {
-        if (validaateSignUp()) {
-            //here we will make the api call to signup the user apiclient is the axios instance SIGNUP_ROUTE is the route to signup the user and we are sending the email and password in the body of the request
-
-            const response = await apiClient.post(SIGNUP_ROUTE, { email, password },
-                { withCredentials: true }
-            );
-            
-            if (response.status === 201) {
-                setUserInfo(response.data.user)
-                navigate('/profile')
-            }
-
-        }
+       try {
+         if (validaateSignUp()) {
+             //here we will make the api call to signup the user apiclient is the axios instance SIGNUP_ROUTE is the route to signup the user and we are sending the email and password in the body of the request
+ 
+             const response = await apiClient.post(SIGNUP_ROUTE, { email, password },
+                 { withCredentials: true }
+             );
+             
+             if (response.status === 201) {
+                 setUserInfo(response.data.user)
+                 navigate('/profile')
+             }
+ 
+         }      
+       } catch (error) {
+        console.log(error);
+        toast.error("Signup failed for some reason.");
+        
+       }
     }
 
     const handleLogin = async () => {
-        if (validateLogin()) {
-            const response = await apiClient.post(LOGIN_ROUTE, { email, password },
-                { withCredentials: true }
-            );
-            if (response.data.user.id) {
-                setUserInfo(response.data.user)
-                if (response.data.user.profileSetup) {
-                    toast.success("Login successful.");
-                    navigate('/chat')
-                } else {
-                    toast.success("Login successful.");
-                    navigate('/profile')
-                }
-            }
-
-        }
+       try {
+         if (validateLogin()) {
+             const response = await apiClient.post(LOGIN_ROUTE, { email, password },
+                 { withCredentials: true }
+             );
+             if (response.data.user.id) {
+                 setUserInfo(response.data.user)
+                 if (response.data.user.profileSetup) {
+                     toast.success("Login successful.");
+                     navigate('/chat')
+                 } else {
+                     toast.success("Login successful.");
+                     navigate('/profile')
+                 }
+             }
+ 
+         }
+       } catch (error) {
+        console.log(error);
+        toast.error("Login failed for some reason.");        
+       }
 
     }
 
