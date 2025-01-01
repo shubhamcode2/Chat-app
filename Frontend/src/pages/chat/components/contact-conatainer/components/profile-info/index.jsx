@@ -33,7 +33,7 @@ const ProfileInfo = () => {
     }
     return (
         <div
-            className='absolute bottom-0 left-0 w-full flex items-center justify-evenly px-10 h-16 bg-[rgb(27,27,30)] border-t-2 border-[rgb(51,51,51)] '
+            className='absolute bottom-0 left-0 w-full flex items-center justify-evenly px-10 h-16 bg-[rgb(30,22,42)] border-t-2 border-[rgb(51,51,51)] '
         >
             <div className='flex gap-3 items-center justify-center '>
 
