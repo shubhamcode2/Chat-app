@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import authRoutes from './routes/AuthRoutes.js';
 import contactsRoutes from './routes/ContactRoutes.js';
+import setupSocket from './socket.js';
+// import { Server } from 'socket.io'; 
 
 
 dotenv.config();
@@ -29,11 +31,11 @@ app.use('/api/contacts', contactsRoutes);
 // console.log("cpu length", os.cpus().length);
 
 
-
-const sever = app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
 });
 
+setupSocket(server)
 
 app.get('/', (req, res) => {
     res.send('Hello World my world earth');

@@ -1,3 +1,5 @@
+import { useSocket } from "@/context/SocketContext"
+import { userAppStore } from "@/store"
 import EmojiPicker from "emoji-picker-react"
 import { useEffect, useRef, useState } from "react"
 import { GrAttachment, GrFormAttachment } from "react-icons/gr"
@@ -11,11 +13,26 @@ const MessageBar = () => {
   const emojiRef = useRef(null);
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [message, setMessage] = useState('')
+  const { selectedChatData, selectedChatType, userInfo } = userAppStore()
+  const socket = useSocket()
 
   const handleAddEmoji = (emoji) => {
     setMessage((prevMessage) => prevMessage + emoji.emoji);
   }
-  const handleSendMessage = () => {
+
+
+  const handleSendMessage = async () => {
+    if (selectedChatType === 'contact') {
+      socket.emit("sendMessage ",
+        {
+          sender: userInfo.id,
+          content: message,
+          recipient: selectedChatData.id,
+          messageType: "text",
+          fileURL: undefined,
+        }
+      )
+    }
 
   }
 
@@ -53,7 +70,6 @@ const MessageBar = () => {
 
         <button
           className='text-neutral-400 focus:border-none focus:outline-none focus:text-neutral-0 duration-300 transitioan-all'
-          onClick={handleSendMessage}
         >
           <GrAttachment className='text-2xl text-white' />
         </button>
@@ -80,7 +96,9 @@ const MessageBar = () => {
         />
       </div>
 
-      <button className='bg-[#000000] rounded-md flex items-center justify-center p-5  focus:border-none focus:outline-none focus:text-neutral-0 duration-300 transitioan-all'>
+      <button
+        onClick={handleSendMessage}
+        className='bg-[#000000] rounded-md flex items-center justify-center p-5  focus:border-none focus:outline-none focus:text-neutral-0 duration-300 transitioan-all'>
         <IoSend className='text-2xl text-white' />
       </button>
 
