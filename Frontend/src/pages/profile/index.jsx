@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { ADD_PROFILE_IMAGE_ROUTE, HOST, REMOVE_PROFILE_IMAGE_ROUTE, UPDATE_PROFILE_ROUTE } from '@/utils/constants'
 import apiClient from '@/lib/api-client'
-import { use } from 'react'
 
 const Profile = () => {
   const { userInfo, setUserInfo } = userAppStore()
@@ -36,23 +35,27 @@ const Profile = () => {
   }, [userInfo])
 
 
-  const validateProfile = async () => {
+  const validateProfile = () => {
     if (!firstName.length || !lastName.length) {
-      toast.error("first name and last name are required.");
+      toast.error("Please fill all the fields");
       return false;
     }
-    return true;
+    return true
   }
 
   const saveChanges = async () => {
     if (validateProfile()) {
       try {
+        // console.log("inside try");
+
         const response = await apiClient.post(UPDATE_PROFILE_ROUTE,
           {
             firstName,
             lastName,
             color: colors[selectedColor],
           }, { withCredentials: true });
+        // console.log("response",response);
+
         if (response.status === 200 && response.data) {
           setUserInfo({ ...response.data })
           toast.success("Profile updated successfully.");
@@ -60,7 +63,6 @@ const Profile = () => {
         }
       } catch (error) {
         console.log(error);
-
       }
 
     }
@@ -68,20 +70,19 @@ const Profile = () => {
 
   const handleFileInputClick = () => {
     fileInputRef.current.click();
-    console.log(fileInputRef.current);
+    // console.log(fileInputRef.current);
 
   };
 
   const handleImgChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log(file);
 
       const formData = new FormData();
       formData.append("profile-image", file)
       const response = await apiClient.post(ADD_PROFILE_IMAGE_ROUTE, formData, { withCredentials: true })
 
-      console.log(response);
+      // console.log(response);
 
       if (response.status === 200 && response.data.image) {
         setUserInfo({ ...userInfo, image: response.data.image })

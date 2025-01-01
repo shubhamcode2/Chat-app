@@ -111,7 +111,7 @@ export const updateProfile = async (request, response, next) => {
     try {
         const { userId } = request
         const { firstName, lastName, color, } = request.body;
-        if (!firstName || !lastName || !color) {
+        if (!firstName.length || !lastName.length) {// i deleted color from here for now because it was not working having problem in profile update
             return response.status(400).send("All fields are required");
         }
         const userData = await User.findByIdAndUpdate(userId, { firstName, lastName, color, profileSetup: true }, { new: true, runValidators: true });
@@ -185,4 +185,9 @@ export const removeProfileImage = async (request, response, next) => {
     }
 }
 
+export const logout = async (request, response, next) => {
+    console.log("kya re laudeya");
 
+    response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "none", httpOnly: true });
+    return response.status(200).send("User logged out successfully");
+}

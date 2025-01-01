@@ -21,21 +21,24 @@ const Auth = () => {
         if (!email.length) {
             toast.error("email is required.");
             return false;
-            if (!password.length) {
-                toast.error("password is required.");
-                return false;
-            }
-            if (!confirmPassword.length) {
-                toast.error("confirm password is required.");
-                return false;
-            }
-            if (password !== confirmPassword) {
-                toast.error("passwords do not match.")
-                return false;
-            }
-            return true;
-        };
-    }
+        }
+        if (!password.length) {
+            toast.error("password is required.");
+            return false;
+        }
+        if (!confirmPassword.length) {
+            toast.error("confirm password is required.");
+            return false;
+        }
+        if (password !== confirmPassword) {
+            toast.error("passwords do not match.")
+            return false;
+        }
+        return true;
+    };
+
+
+
     const validateLogin = async () => {
         if (!email.length) {
             toast.error("email is required.");

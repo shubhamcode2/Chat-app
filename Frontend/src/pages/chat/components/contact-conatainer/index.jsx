@@ -1,4 +1,5 @@
 import Logoflow1 from '@/assets/FlowTalk1.png'
+import ProfileInfo from './components/profile-info'
 
 
 
@@ -27,13 +28,13 @@ const ContactContainer = () => {
 
             </div>
 
-
+            <ProfileInfo />
         </div >
     )
 }
 
 
-const Title = ({text}) => {
+const Title = ({ text }) => {
     return (
         <h6 className='uppercase tracking-widest textneutral-400 pl-10 font-light text-opacity-90 text-sm '>
             {text}
