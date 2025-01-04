@@ -53,7 +53,6 @@
 //                 addMessage(message);
 //             }
 //         };
-
 //         // Add message listener
 //         socket.current.on("Receive Message", handleRecievedMessage);
 
@@ -74,23 +73,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { userAppStore } from "@/store";
 import { HOST } from "@/utils/constants";
-import React, { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 
 const SocketContext = createContext(null);
@@ -114,35 +99,26 @@ export const SocketProvider = ({ children }) => {
             socket.current.on("connect", () => {
                 console.log("Connected to socket server");
             });
-            // socket.current.on("disconnect", () => {
-            //     console.log("Disconnected from socket server");
-            // });
-            // return () => {
-            //     socket.current.disconnect();
-            // }
+
+            const handleRecievedMessage = (message) => {
+                const { selectedChatType, selectedChatData, addMessage } = userAppStore.getState();
+                if (
+                    selectedChatType !== undefined &&
+                    (selectedChatData.id === message.sender._id ||
+                        selectedChatData.id === message.recipient._id)) {
+                    console.log("message", message);
+                    addMessage(message);
+                }
+            }
+
+            socket.current.on("Receive Message", handleRecievedMessage)
+
+            return () => {
+                socket.current.disconnect();
+            }
         }
 
-        socket.current.on("Receive Message", handleRecievedMessage)
     }, [userInfo])
-
-    const handleRecievedMessage = (message) => {
-        const { selectedChatType, selectedChatData, addMessage } = userAppStore.getState();
-        if (
-            selectedChatType !== undefined &&
-            (selectedChatData.id === message.sender._id ||
-                selectedChatData.id === message.recipient._id)) {
-            console.log("message", message);
-
-            addMessage(message);
-
-        }
-    }
-
-
-
-
-
-
 
     return (
         <SocketContext.Provider value={socket.current}>

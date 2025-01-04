@@ -8,8 +8,8 @@ const EmptyChatContainer = () => {
 
             <Lottie
                 isClickToPauseDisabled={true}
-                height={200}
-                width={200}
+                height={400}
+                width={400}
                 options={animationDefaultOptions}
             />
             <div className="text-opacity-80 text-white flex flex-col gap-5 mt-10 lg:text-4xl transition-all duration-300 ">
