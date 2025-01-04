@@ -12,7 +12,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 const databaseURL = process.env.DATABASE_URL;
 
 app.use(cors({
@@ -21,30 +20,28 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use("/uploads/profiles",express.static("uploads/profiles"))
+app.use("/uploads/profiles", express.static("uploads/profiles"))
 app.use(cookieParser());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/contacts', contactsRoutes);
-
-// console.log("cpu length", os.cpus().length);
 
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
 });
 
-setupSocket(server)
+setupSocket(server);
+
 
 app.get('/', (req, res) => {
     res.send('Hello World my world earth');
 });
 
 
-mongoose.connect(databaseURL).then(() => {
-    console.log('Database connected');
-}).catch((error) => {
-    console.log(error.message);
-});
+mongoose
+    .connect(databaseURL)
+    .then(() => { console.log('Database connected successfully ji'); })
+    .catch((error) => { console.log(error.message); });
 
 

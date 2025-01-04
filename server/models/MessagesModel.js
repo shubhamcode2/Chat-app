@@ -14,24 +14,24 @@ const messageSchema = new mongoose.Schema(
         },
         messageType: {
             type: String,
-            enum: ["TEXT", "IMAGE", "VIDEO", "FILE"],
-            required: true
+            enum: ["text", "file"],
+            required: true,
         },
         content: {
             type: String,
             required: function () {
-                return this.messageType === "TEXT";
+                return this.messageType === "text";
             },
         },
         fileURL: {
             type: String,
-            required: function () {
-                return this.messageType === "FILE";
-            },
+            required: function () {return this.messageType === "file"}
+        },
+        timestamp:{
+            type: Date,
+            default: Date.now,
         }
-    }, {
-    timestamps: true
-});
+    });
 
 
 const Message = mongoose.model("Message", messageSchema); 

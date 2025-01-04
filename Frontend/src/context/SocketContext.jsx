@@ -1,81 +1,6 @@
-// import { userAppStore } from "@/store";
-// import { HOST } from "@/utils/constants";
-// import React, { createContext, useContext, useEffect, useRef } from "react";
-// import { io } from "socket.io-client";
-
-// const SocketContext = createContext(null);
-
-// export const useSocket = () => {
-//     return useContext(SocketContext);
-// };
-
-// export const SocketProvider = ({ children }) => {
-//     const socket = useRef();
-//     const { userInfo } = userAppStore();
-
-//     useEffect(() => {
-//         if (userInfo) {
-//             // Initialize socket connection
-//             socket.current = io(HOST, {
-//                 withCredentials: true,
-//                 query: { userId: userInfo.id },
-//             });
-
-//             // Set up basic event listeners
-//             socket.current.on("connect", () => {
-//                 console.log("Connected to socket server");
-//             });
-
-//             socket.current.on("disconnect", () => {
-//                 console.log("Disconnected from socket server");
-//             });
-
-//             return () => {
-//                 // Cleanup on unmount
-//                 socket.current.disconnect();
-//             };
-//         }
-//     }, [userInfo]);
-
-//     useEffect(() => {
-//         if (!socket.current) return;
-
-//         const handleRecievedMessage = (message) => {
-//             const { selectedChatType, selectedChatData, addMessage } = userAppStore.getState();
-
-//             // Check message relevance
-//             if (
-//                 selectedChatType !== undefined &&
-//                 (selectedChatData.id === message.sender._id ||
-//                     selectedChatData.id === message.recipient._id)
-//             ) {
-//                 console.log("message", message);
-//                 addMessage(message);
-//             }
-//         };
-//         // Add message listener
-//         socket.current.on("Receive Message", handleRecievedMessage);
-
-//         // Cleanup listener
-//         return () => {
-//             socket.current.off("Receive Message", handleRecievedMessage);
-//         };
-//     }, []); // Dependency array is empty as `socket.current` is stable
-
-//     return (
-//         <SocketContext.Provider value={socket.current}>
-//             {children}
-//         </SocketContext.Provider>
-//     );
-// };
-
-
-
-
-
 import { userAppStore } from "@/store";
-import { HOST } from "@/utils/constants";
 import { createContext, useContext, useEffect, useRef } from "react";
+import { HOST } from "@/utils/constants";
 import { io } from "socket.io-client";
 
 const SocketContext = createContext(null);
@@ -93,25 +18,26 @@ export const SocketProvider = ({ children }) => {
             socket.current = io(HOST, {
                 withCredentials: true,
                 query: { userId: userInfo.id },
-            }
-            );
+            });
+
 
             socket.current.on("connect", () => {
                 console.log("Connected to socket server");
             });
 
             const handleRecievedMessage = (message) => {
-                const { selectedChatType, selectedChatData, addMessage } = userAppStore.getState();
-                if (
-                    selectedChatType !== undefined &&
-                    (selectedChatData.id === message.sender._id ||
-                        selectedChatData.id === message.recipient._id)) {
+                console.log("message", message);
+
+                const { selectedChatData, selectedChatType, addMessage } = userAppStore.getState();
+                if (selectedChatType !== undefined &&
+                    (selectedChatData._id === message.sender._id ||
+                        selectedChatData._id === message.recipient._id)) {
                     console.log("message", message);
                     addMessage(message);
                 }
             }
 
-            socket.current.on("Receive Message", handleRecievedMessage)
+            socket.current.on("recieveMessage", handleRecievedMessage)
 
             return () => {
                 socket.current.disconnect();
@@ -126,3 +52,71 @@ export const SocketProvider = ({ children }) => {
         </SocketContext.Provider>
     )
 };
+
+
+// // import { userAppStore } from "@/store";
+// // import { HOST } from "@/utils/constants";
+// // import { createContext, useContext, useEffect, useRef, useCallback } from "react";
+// // import { io } from "socket.io-client";
+
+// // const SocketContext = createContext(null);
+
+// // export const useSocket = () => {
+// //     return useContext(SocketContext);
+// // };
+
+// // export const SocketProvider = ({ children }) => {
+// //     const socket = useRef(null);
+// //     const { userInfo } = userAppStore();
+
+// //     useEffect(() => {
+// //         if (userInfo) {
+// //             socket.current = io(HOST, {
+// //                 withCredentials: true,
+// //                 query: { userId: userInfo.id },
+// //             });
+
+// //             socket.current.on("connect", () => {
+// //                 console.log("Connected to socket server");
+// //             });
+
+// //             socket.current.on("disconnect", () => {
+// //                 console.log("Disconnected from socket server");
+// //             });
+
+// //             const handleReceivedMessage = (message) => {
+// //                 console.log("Received message:", message);
+
+// //                 const { selectedChatType, selectedChatData, addMessage } = userAppStore.getState();
+// //                 if (
+// //                     selectedChatType !== undefined &&
+// //                     (selectedChatData.id === message.sender._id ||
+// //                         selectedChatData.id === message.recipient._id)
+// //                 ) {
+// //                     addMessage(message);
+// //                 }
+// //             };
+
+// //             socket.current.on("receiveMessage", handleReceivedMessage);
+
+// //             return () => {
+// //                 socket.current.disconnect();
+// //                 socket.current = null; // Reset the socket reference
+// //             };
+// //         }
+// //     }, [userInfo]);
+
+// //     const sendMessage = useCallback((event, data) => {
+// //         if (socket.current && socket.current.connected) {
+// //             socket.current.emit(event, data);
+// //         } else {
+// //             console.warn("Socket is not connected. Cannot send message.");
+// //         }
+// //     }, []);
+
+// //     return (
+// //         <SocketContext.Provider value={{ socket: socket.current, sendMessage }}>
+// //             {children}
+// //         </SocketContext.Provider>
+// //     );
+// // };
