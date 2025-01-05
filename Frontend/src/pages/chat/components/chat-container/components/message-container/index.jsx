@@ -1,4 +1,6 @@
+import apiClient from "@/lib/api-client"
 import { userAppStore } from "@/store"
+import { GET_ALL_MESSAGES_ROUTE } from "@/utils/constants"
 import moment from "moment"
 import { useEffect, useRef } from "react"
 
@@ -6,8 +8,38 @@ import { useEffect, useRef } from "react"
 
 
 const MessageContainer = () => {
+
     const scrollRef = useRef()
-    const { selectedChatData, selectedChatType, userInfo, selectedChatMessages } = userAppStore()
+    const { selectedChatData, selectedChatType, userInfo, selectedChatMessages, setSelectedChatMessages } = userAppStore()
+
+
+    useEffect(() => {
+
+        const getMessages = async () => {
+            try {
+                const response = await apiClient.post(GET_ALL_MESSAGES_ROUTE,
+                    { id: selectedChatData._id },
+                    { withCredentials: true }
+                )
+
+                if (response.data.messages) {
+                    setSelectedChatMessages(response.data.messages);
+                }
+            } catch (error) {
+
+            }
+        }
+        if (selectedChatData._id) {
+            if (selectedChatType === "contact") getMessages();
+        }
+
+    }, [selectedChatData,
+        selectedChatType,
+        setSelectedChatMessages
+    ])
+
+
+
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -57,7 +89,7 @@ const MessageContainer = () => {
             </div>
 
         )
-       
+
 
     return (
         <div className='flex-1 overflow-y-auto scrollbar-hidden p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[75vw] w-full'>
