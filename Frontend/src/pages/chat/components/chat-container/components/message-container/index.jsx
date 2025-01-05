@@ -47,6 +47,16 @@ const MessageContainer = () => {
         }
     }, [selectedChatMessages])
 
+
+    const checkIfImage = (filePath) => {
+
+        const imageRegex = /\.(jpg|jpeg|png|gif|webp)$/i;
+        return imageRegex.test(filePath);
+    }
+
+
+
+
     const renderMessages = () => {
         let lastDate = null;
         return selectedChatMessages.map((message, index) => {
@@ -81,6 +91,8 @@ const MessageContainer = () => {
                         {message.content}
                     </div>
                 )}
+                
+
                 <div className="text-xs text-gray-600">
                     {moment(message.timestamp).fromNow()}
                     {/* {moment(message.timestamp).format("LT")} */}
