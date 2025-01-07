@@ -1,17 +1,19 @@
 import apiClient from "@/lib/api-client"
 import { userAppStore } from "@/store"
-import { GET_ALL_MESSAGES_ROUTE } from "@/utils/constants"
+import { GET_ALL_MESSAGES_ROUTE, HOST } from "@/utils/constants"
 import moment from "moment"
-import { useEffect, useRef } from "react"
-
-
-
+import { useEffect, useRef, useState } from "react"
+import { MdFolderZip } from "react-icons/md"
+import { LuDownload } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 
 const MessageContainer = () => {
 
     const scrollRef = useRef()
     const { selectedChatData, selectedChatType, userInfo, selectedChatMessages, setSelectedChatMessages } = userAppStore()
 
+    const [showImage, setShowImage] = useState(false);
+    const [imageURL, setImageURL] = useState(null);
 
     useEffect(() => {
 
@@ -79,18 +81,71 @@ const MessageContainer = () => {
         })
     }
 
+
+
+
+    const downloadFile = async (url) => {
+        const response = await apiClient.get(`${HOST}/${url}`, {
+            responseType: 'blob',
+        });
+        const urlBlob = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = urlBlob;
+        link.setAttribute('download', url.split("/").pop());
+        document.body.appendChild(link);
+        link.click();
+        window.URL.revokeObjectURL(urlBlob);
+    }
+
+
+
+
+
     const renderDMMessages =
         (message) => (
             <div className={`${message.sender === selectedChatData._id ? "text-left" : "text-right"}`}>
                 {message.messageType === "text" && (
                     <div
                         className={` ${message.sender !== selectedChatData.MessageContainer_id ?
-                            "bg-[rgb(43,42,43)] text-[rgb(217,214,218)] border-[rgb(89,53,105)]"
-                            : "bg-[#2a2b33] text-[rgb(229,226,230)] border-[rgb(239,237,240)] "
+                            " text-[rgb(217,214,218)] border-[rgb(89,53,105)]"
+                            : " text-[rgb(229,226,230)] border-[rgb(239,237,240)] "
                             } border inline-block  p-4  my-1 max-w-[50%] break-words  rounded-full `}>
                         {message.content}
                     </div>
                 )}
+
+                {
+                    message.messageType === "file" && <div
+                        className={` ${message.sender !== selectedChatData.MessageContainer_id ?
+                            " text-[rgb(217,214,218)] "
+                            : " text-[rgb(229,226,230)] "
+                            }  inline-block  p-1  my-1 max-w-[50%] break-words  rounded `}>
+                        {checkIfImage(message.fileURL)
+                            ? <div
+                                onClick={() => {
+                                    setShowImage(true);
+                                    setImageURL(message.fileURL);
+                                }}
+                                className="cursor-pointer border-2 border-gray-500 ">
+                                <img
+                                    src={`${HOST}/${message.fileURL}`}
+                                    height={200}
+                                    width={200}
+                                />
+                            </div>
+                            : <div
+                                // onClick={() => window.open(`${HOST}/${message.fileURL}`)}
+                                className="cursor-pointer border-2 rounded border-gray-500 flex items-center justify-center gap-4 bg-[rgb(51,51,51)] ">
+                                <span className="text-purple-500 text-2xl p-3 "><MdFolderZip /></span>
+                                <span className="text-white p-3 ">{message.fileURL.split("/").pop()}</span>
+                                <span
+                                    onClick={() => window.open(`${HOST}/${message.fileURL}`)}
+                                    // onClick={() => downloadFile(message.fileURL)}
+                                    className="text-purple-500 text-2xl p-3 bg-black"><LuDownload /></span>
+                            </div>
+                        }
+                    </div>
+                }
 
 
                 <div className="text-xs text-gray-600">
@@ -107,6 +162,38 @@ const MessageContainer = () => {
         <div className='flex-1 overflow-y-auto scrollbar-hidden p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[75vw] w-full'>
             {renderMessages()}
             <div ref={scrollRef} />
+
+            {
+                showImage &&
+                <div
+                    className="fixed top-0 left-0 w-[100vw] h-[100vh]  flex items-center justify-center bg-[rgba(22,21,22,0.8)] z-50"
+                >
+                    <div>
+                        <img src={`${HOST}/${imageURL}`} />
+                    </div>
+                    <div >
+
+
+                        <button
+                            onClick={() => downloadFile(imageURL)}
+                            className="absolute top-2 right-[100px] rounded-full bg-black  p-3 text-3xl">
+                            <LuDownload  />
+                        </button>
+
+                        <button
+                            onClick={() =>{ setShowImage(false)
+                                setImageURL(null)}
+                            }
+                            className="absolute top-2 right-[200px] rounded-full bg-black  p-3 text-3xl">
+                            <IoClose />
+                        </button>
+
+
+
+                    </div>
+                </div>
+
+            }
         </div>
     )
 }
