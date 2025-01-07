@@ -91,7 +91,7 @@ const MessageContainer = () => {
                         {message.content}
                     </div>
                 )}
-                
+
 
                 <div className="text-xs text-gray-600">
                     {moment(message.timestamp).fromNow()}

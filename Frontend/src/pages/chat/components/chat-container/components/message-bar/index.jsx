@@ -58,6 +58,7 @@ const MessageBar = () => {
   const handleAttachmentClick = () => {
     if (fileInputRef.current) fileInputRef.current.click()
   }
+
   const handleAttachMentChange = async (e) => {
     try {
       const file = e.target.files[0];

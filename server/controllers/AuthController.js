@@ -96,7 +96,6 @@ export const getUserInfo = async (request, response, next) => {
                 lastName: userData.lastName,
                 image: userData.image,
                 color: userData.color,
-
                 profileSetup: userData.profileSetup,
             })
 
