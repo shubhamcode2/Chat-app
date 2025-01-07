@@ -1,4 +1,4 @@
-# Chat App
+# FlowTalk Chat App
 
 A **real-time chat application** built using the **MERN stack** (MongoDB, Express, React, and Node.js) with **Vite** as the React bundler. The app allows users to connect and communicate in real-time.
 
@@ -65,7 +65,7 @@ A **real-time chat application** built using the **MERN stack** (MongoDB, Expres
 ---
 <!-- ![Chat App Screenshot](/Frontend/public/Screenshot%20(20).png) -->
 ---
-## meet the dev
+<!-- ## meet the dev -->
 <!-- ![Chat App Screenshot](/Frontend/public/Screenshot%202025-01-03%20180445.png) -->
 
 
