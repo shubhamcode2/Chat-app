@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { MdFolderZip } from "react-icons/md"
 import { LuDownload } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
+import { FaFile } from "react-icons/fa";
 
 const MessageContainer = () => {
 
@@ -136,7 +137,10 @@ const MessageContainer = () => {
                             : <div
                                 // onClick={() => window.open(`${HOST}/${message.fileURL}`)}
                                 className="cursor-pointer border-2 rounded border-gray-500 flex items-center justify-center gap-4 bg-[rgb(51,51,51)] ">
-                                <span className="text-purple-500 text-2xl p-3 "><MdFolderZip /></span>
+                                <span className="text-purple-500 text-2xl p-3 ">
+                                    {/* <MdFolderZip /> */}
+                                    <FaFile />
+                                    </span>
                                 <span className="text-white p-3 ">{message.fileURL.split("/").pop()}</span>
                                 <span
                                     onClick={() => window.open(`${HOST}/${message.fileURL}`)}

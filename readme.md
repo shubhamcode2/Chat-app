@@ -1,90 +1,66 @@
 # Chat App
 
-This is a chat application built with React and Vite for the frontend and Express.js for the backend. The application supports user authentication, profile management, and real-time chat functionality.
+A **real-time chat application** built using the **MERN stack** (MongoDB, Express, React, and Node.js) with **Vite** as the React bundler. The app allows users to connect and communicate in real-time.
 
-## Project Structure
-Frontend/ .env .gitignore components.json eslint.config.js index.html jsconfig.json package.json postcss.config.js public/ README.md src/ App.css App.jsx assets/ components/ ui/ index.css lib/ api-client.js utils.js main.jsx pages/ ... utils/ tailwind.config.js vite.config.js readme.md server/ .env .gitignore controllers/ AuthController.js index.js middlewares/ AuthMiddleware.js models/ UserModel.js package.json routes/ AuthRoutes.js
-## Frontend
+## Features
+- **Real-time Communication**: Instant messaging using WebSocket technology.
+- **User Authentication**: Secure login and signup functionality.
+- **Responsive Design**: Works seamlessly across devices.
+- **Modern UI**: Built with React and styled-components.
 
-The frontend is built using React and Vite. It includes the following main components:
+---
 
-- **App.jsx**: The main application component that sets up routing.
-- **components/ui**: Reusable UI components such as buttons, inputs, tabs, and toasters.
-- **pages**: Different pages of the application like authentication, profile, and chat.
-- **lib**: Utility functions and API client setup.
-- **assets**: Static assets like images.
+## Technologies Used
 
-### Scripts
+### Frontend
+- ![React](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEIVA6MPvuM_5PZUgV-8RtsS1YW27i15o1AQ&s) React with Vite
 
-- `dev`: Start the development server.
-- `build`: Build the application for production.
-- `lint`: Run ESLint to check for code quality.
-- `preview`: Preview the production build.
+### Backend
+- ![Node.js](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png) Node.js
+- ![Express](https://www.manektech.com/storage/developer/1646733543.webp) Express
 
-### Dependencies
+### Database
+- ![MongoDB](https://miro.medium.com/v2/resize:fit:512/1*doAg1_fMQKWFoub-6gwUiQ.png) MongoDB
 
-- React
-- React Router DOM
-- Axios
-- Tailwind CSS
-- Zustand
-- ESLint
+### Tools
+- ![Vite](https://upload.wikimedia.org/wikipedia/commons/f/f1/Vitejs-logo.svg) Vite for fast development
+- ![NPM](https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/640px-Npm-logo.svg.png) NPM for package management
 
-## Backend
+---
 
-The backend is built using Express.js and MongoDB. It includes the following main components:
-
-- **index.js**: The main server file that sets up middleware and routes.
-- **controllers**: Contains the authentication controller for handling signup and login.
-- **middlewares**: Middleware functions for authentication.
-- **models**: Mongoose models for MongoDB collections.
-- **routes**: Express routes for authentication.
-
-### Scripts
-
-- `start`: Start the server.
-- `dev`: Start the server with nodemon for development.
-
-### Dependencies
-
-- Express
-- Mongoose
-- Bcrypt
-- JSON Web Token
-- Cookie Parser
-- CORS
-- Dotenv
-
-## Getting Started
+## Setup Instructions
 
 ### Prerequisites
+- Node.js installed
+- MongoDB instance running
 
-- Node.js
-- MongoDB
-
-### Installation
-
+### Run the App
 1. Clone the repository:
+   ```bash
+   git clone https://github.com/shubhamcode2/Chat-app.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd chat-app
+   ```
+3. Install dependencies for both frontend and backend:
+   ```bash
+   npm install
+   ```
+4. Run the backend server:
+   ```bash
+   cd server
+   npm run dev
+   ```
+5. Run the frontend:
+   ```bash
+   cd Frontend
+   npm run dev
+   ```
 
-```sh
-git clone https://github.com/your-repo/chat-app.git
-cd chat-app
-```
+---
 
-2. Install dependencies for both frontend and backend:
-```
-cd Frontend
-npm install
-cd ../server
-npm install
-```
+## Screenshot
+![Chat App Screenshot](path-to-your-image/project-screenshot.png)
 
-3. Set up environment variables:
-
-Create a .env file in both Frontend and server directories and add the necessary environment variables.
-Running the Application
-
-
-
-4. Start the backend server:
-
+---
