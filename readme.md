@@ -13,18 +13,18 @@ A **real-time chat application** built using the **MERN stack** (MongoDB, Expres
 ## Technologies Used
 
 ### Frontend
-- ![React](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEIVA6MPvuM_5PZUgV-8RtsS1YW27i15o1AQ&s) React with Vite
+- React with Vite
 
 ### Backend
-- ![Node.js](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png) Node.js
-- ![Express](https://www.manektech.com/storage/developer/1646733543.webp) Express
+- Node.js
+- Express
 
 ### Database
-- ![MongoDB](https://miro.medium.com/v2/resize:fit:512/1*doAg1_fMQKWFoub-6gwUiQ.png) MongoDB
+- MongoDB
 
 ### Tools
-- ![Vite](https://upload.wikimedia.org/wikipedia/commons/f/f1/Vitejs-logo.svg) Vite for fast development
-- ![NPM](https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/640px-Npm-logo.svg.png) NPM for package management
+- Vite for fast development
+- NPM for package management
 
 ---
 
@@ -37,7 +37,7 @@ A **real-time chat application** built using the **MERN stack** (MongoDB, Expres
 ### Run the App
 1. Clone the repository:
    ```bash
-   git clone https://github.com/shubhamcode2/Chat-app.git
+   git clone <repository-url>
    ```
 2. Navigate to the project directory:
    ```bash
@@ -54,13 +54,27 @@ A **real-time chat application** built using the **MERN stack** (MongoDB, Expres
    ```
 5. Run the frontend:
    ```bash
-   cd Frontend
+   cd client
    npm run dev
    ```
 
 ---
 
 ## Screenshot
-![Chat App Screenshot](path-to-your-image/project-screenshot.png)
+![Chat App Screenshot](/Frontend/public/Screenshot%202025-01-07%20231015.png)
+---
+![Chat App Screenshot](/Frontend/public/Screenshot%20(20).png)
+---
+## meet the dev
+![Chat App Screenshot](/Frontend/public/Screenshot%202025-01-03%20180445.png)
+
 
 ---
+
+## Contributions
+Feel free to contribute to this project by opening issues or submitting pull requests.
+
+---
+
+## License
+This project is licensed under the [MIT License](LICENSE).
