@@ -63,10 +63,10 @@ A **real-time chat application** built using the **MERN stack** (MongoDB, Expres
 ## Screenshot
 ![Chat App Screenshot](/Frontend/public/Screenshot%202025-01-07%20231015.png)
 ---
-![Chat App Screenshot](/Frontend/public/Screenshot%20(20).png)
+<!-- ![Chat App Screenshot](/Frontend/public/Screenshot%20(20).png) -->
 ---
 ## meet the dev
-![Chat App Screenshot](/Frontend/public/Screenshot%202025-01-03%20180445.png)
+<!-- ![Chat App Screenshot](/Frontend/public/Screenshot%202025-01-03%20180445.png) -->
 
 
 ---
