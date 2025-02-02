@@ -13,36 +13,55 @@ const ChatHeader = () => {
         <div className='flex gap-3 justify-center items-center'>
 
           <div className='w-12 h-12 relative '>
-            <Avatar className="h-12 w-12  rounded-full overflow-hidden">
-              {selectedChatData.image ? (
-                <AvatarImage
-                  src={`${HOST}/${selectedChatData.image}`}
-                  className='object-cover w-full h-full bg-black'
-                  alt="Profile" />
-              ) : (
-                <div
-                  className={`uppercase h-12 w-12  text-lg  flex items-center justify-center rounded-full ${getColor(selectedChatData.color)} `}>
-                  {selectedChatData.firstName
-                    ? selectedChatData.firstName.split("").shift()
-                    : selectedChatData.email.split("").shift()
-                  }
-                </div>
-              )}
-            </Avatar>
+            {
+              selectedChatType === "contact" ? <Avatar className="h-12 w-12  rounded-full overflow-hidden">
+                {selectedChatData.image ? (
+                  <AvatarImage
+                    src={`${HOST}/${selectedChatData.image}`}
+                    className='object-cover w-full h-full bg-black'
+                    alt="Profile" />
+                ) : (
+                  <div
+                    className={`uppercase h-12 w-12  text-lg  flex items-center justify-center rounded-full ${getColor(selectedChatData.color)} `}>
+                    {selectedChatData.firstName
+                      ? selectedChatData.firstName.split("").shift()
+                      : selectedChatData.email.split("").shift()
+                    }
+                  </div>
+                )}
+              </Avatar> : <Avatar className="h-12 w-12  rounded-full overflow-hidden">
+                {selectedChatData.image ? (
+                  <AvatarImage
+                    src={`${HOST}/${selectedChatData.image}`}
+                    className='object-cover w-full h-full bg-black'
+                    alt="Profile" />
+                ) : (
+                  <div
+                    className={`uppercase h-12 w-12  text-lg  flex items-center justify-center rounded-full ${getColor(selectedChatData.color)} `}>
+                    {selectedChatData.name
+                      ? selectedChatData.name.split("").shift()
+                      : selectedChatData.email.split("").shift()
+                    }
+                  </div>
+                )}
+              </Avatar>
+            }
+           
           </div>
 
           <div>
-            {selectedChatType === "contact" && selectedChatData.firstName ? `${selectedChatData.firstName} ${selectedChatData.lastName}` : selectedChatData.email} 
+            {selectedChatType === "channel" && selectedChatData.name ? selectedChatData.name : ""}
+            {selectedChatType === "contact" && selectedChatData.firstName ? `${selectedChatData.firstName} ${selectedChatData.lastName}` : selectedChatData.email}
           </div>
 
         </div>
-                      <div className='flex gap-5 justify-center items-center'>
-                        <button
-                          onClick={closeChat}
-                          className='text-neutral-400 focus:border-none focus:outline-none focus:text-neutral-0 duration-300 transitioan-all'>
-                          <RiCloseFill className='text-3xl' />
-                        </button>
-                      </div>
+        <div className='flex gap-5 justify-center items-center'>
+          <button
+            onClick={closeChat}
+            className='text-neutral-400 focus:border-none focus:outline-none focus:text-neutral-0 duration-300 transitioan-all'>
+            <RiCloseFill className='text-3xl' />
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -2,16 +2,17 @@ import Logoflow1 from '@/assets/FlowTalk1.png'
 import ProfileInfo from './components/profile-info'
 import NewDm from './components/new-dm'
 import { useEffect } from 'react'
-import { GET_DM_CONTACTS_ROUTE } from '@/utils/constants'
+import { GET_DM_CONTACTS_ROUTE, GET_USER_CHANNELS_ROUTE } from '@/utils/constants'
 import apiClient from '@/lib/api-client'
 import { userAppStore } from '@/store'
 import ContactList from '@/components/ContactList'
+import CreateChannel from './components/create-channel'
 
 
 
 const ContactContainer = () => {
 
-    const { setDirectMessagesContacts, directMessagesContacts } = userAppStore()
+    const { setDirectMessagesContacts, directMessagesContacts, channels, setChannels } = userAppStore()
 
     useEffect(() => {
         const getContacts = async () => {
@@ -19,17 +20,24 @@ const ContactContainer = () => {
                 withCredentials: true,
             })
 
-            if(response.data.contacts){
+            if (response.data.contacts) {
                 // console.log(response.data.contacts);
                 setDirectMessagesContacts(response.data.contacts)
-                
             }
+        }
+        const getChannels = async () => {
+            const response = await apiClient.get(GET_USER_CHANNELS_ROUTE, {
+                withCredentials: true,
+            })
 
-
+            if (response.data.channels) {
+                setChannels(response.data.channels)
+            }
         }
 
         getContacts()
-    }, [])
+        getChannels()
+    }, [setChannels, setDirectMessagesContacts])
 
 
 
@@ -59,8 +67,12 @@ const ContactContainer = () => {
 
                 <div className="flex items-center justify-between pr-10">
                     <Title text="Channels" />
+                    <CreateChannel />
                 </div>
+                <div className='max-h-[35vh] overflow-y-auto scrollbar-hidden'>
+                    <ContactList contacts={channels} isChannel={true} />
 
+                </div>
             </div>
 
             <ProfileInfo />

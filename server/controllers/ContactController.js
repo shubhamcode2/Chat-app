@@ -50,7 +50,7 @@ export const getContactsForDMList = async (request, response, next) => {
                 }
             },
             {
-                $sort:{timestamp:-1}
+                $sort: { timestamp: -1 }
             },
             {
                 $group: {
@@ -83,7 +83,7 @@ export const getContactsForDMList = async (request, response, next) => {
                     firstName: "$contactInfo.firstName",
                     lastName: "$contactInfo.lastName",
                     image: "$contactInfo.image",
-                    color: "$contactInfo.color", 
+                    color: "$contactInfo.color",
                 }
             },
             {
@@ -91,21 +91,30 @@ export const getContactsForDMList = async (request, response, next) => {
             }
 
         ])
-
-
-
-
-
-
-
-
-
-
-
-
         return response.status(200).json({ contacts })
 
 
+    } catch (error) {
+        console.log(error);
+        return response.status(500).send("Internal Server Error");
+
+
+    }
+}
+
+
+export const getAllContacts = async (request, response, next) => {
+    try {
+        const users = await User.find({ _id: { $ne: request.userId } }, "firstName lastName _id email"
+        );
+
+        const contacts = users.map((user) => ({
+            label: user.firstName ? `${user.firstName} ${user.lastName}` : user.email,
+            value: user._id,
+            email: user.email
+        }))
+
+        return response.status(200).json({ contacts })
     } catch (error) {
         console.log(error);
         return response.status(500).send("Internal Server Error");
