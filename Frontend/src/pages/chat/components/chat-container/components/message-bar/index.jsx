@@ -108,6 +108,8 @@ const MessageBar = () => {
 
   }
 
+  
+
 
   return (
     <div className='h-[10vh] bg-[transparent] flex items-center justify-center px-8 mb-6  gap-6'>
@@ -120,6 +122,11 @@ const MessageBar = () => {
           placeholder='Type a message'
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && message.trim() !== "") {
+              handleSendMessage();
+            }
+          }}
         />
 
         <button
@@ -171,27 +178,3 @@ export default MessageBar
 
 
 
-
-
-
-
-
-// const handleSendMessage = () => {
-//   if (!message.trim()) {
-//     console.error("Cannot send an empty message.");
-//     return;
-//   }
-
-//   if (selectedChatType === 'contact') {
-//     socket.emit("sendMessage", {
-//       sender: userInfo.id,
-//       content: message,
-//       recipient: selectedChatData.id,
-//       messageType: "text",
-//       fileURL: undefined,
-//     });
-//     console.log("Message sent:", message);
-//   } else {
-//     console.warn("Unsupported chat type:", selectedChatType);
-//   }
-// };

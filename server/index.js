@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 
 mongoose
     .connect(databaseURL)
-    .then(() => { console.log('Database connected successfully ji'); })
-    .catch((error) => { console.log(error.message); });
+    .then(() => { console.log('Database connected successfully sir'); })
+    .catch((error) => { console.log("error message in mongooose.connect :",error); });
 
 

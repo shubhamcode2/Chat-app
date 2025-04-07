@@ -31,6 +31,10 @@ const ProfileInfo = () => {
             console.log(error);
         }
     }
+
+
+
+    
     return (
         <div
             className='absolute bottom-0 left-0 w-full flex items-center justify-evenly px-10 h-16 bg-[rgb(30,22,42)] border-t-2 border-[rgb(51,51,51)] '
