@@ -5,6 +5,7 @@ import { renameSync, unlinkSync } from "fs";
 
 //here token data is email and userId and maxAge is 3 days in millisecond and JWT_KEY is the secret key
 const maxAge = 3 * 24 * 60 * 60 * 1000;
+
 const createToken = (email, userId) => {
     return jwt.sign({ email, userId }, process.env.JWT_KEY, { expiresIn: maxAge });
 };

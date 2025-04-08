@@ -4,7 +4,18 @@ import { varifyToken } from "../middlewares/AuthMiddleware.js";
 import multer from "multer";
 
 const authRoutes = Router();
-const upload = multer({ dest: "uploads/profiles" });
+// const upload = multer({ dest: "uploads/profiles" },
+//     limits: {
+//     fileSize: 2 * 1024 * 1024 // 2MB in bytes
+// });
+
+const upload = multer({
+    dest: "uploads/profiles",
+    limits: {
+        fileSize: 10 * 1024 * 1024 // 10MB in bytes
+    }
+});
+
 
 
 authRoutes.post("/signup", signup);
